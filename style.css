@@ -42,9 +42,15 @@
 }
 
 .side-drawer:hover {
-    cursor: pointer;
     scale: 1.2;
     transition: all ease-in-out 0.25s;
+}
+
+.side-drawer button {
+    border: 1px solid rgb(17, 32, 61);
+    background-color: transparent;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .fa-heart {
@@ -61,3 +67,34 @@
     font-size: 0.8rem;
     text-align: center;
 }
+
+aside {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* flex: 0.2; */
+    background-color: lightgray;
+    opacity: 0.6;
+    height: 98vh;
+    width: 23vw;
+    display: none;
+}
+
+#sidebar.show-sidebar {
+    display: flex;
+    transition: all ease-in-out .25s;
+}
+
+.title {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-align: center;
+}
+
