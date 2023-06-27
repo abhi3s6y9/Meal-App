@@ -32,12 +32,80 @@
 
     <aside>
         <div id="sidebar">
-            <div class="title">
-                Your Favourite Item
+            <div class="title" style="font-size: 1.4rem;">
+                Your Favourite Items
             </div>
-            <hr>
+            <hr/>
+
+            <div id="fav">
+                <!-- Favourite items -->
+                    <!-- Favourite item photo -->
+                    <!-- Favourite item details -->
+                        <!-- Remove from Favourite button -->
+            </div>
         </div>
     </aside>
+
+    <main>
+        <div id="flex-box">
+
+            <div class="container">
+
+                <div class="header">
+                    <div class="title" style="color: gray;">
+                        What would you like to Eat!
+                    </div>
+                </div>
+
+                <div id="search-bar">
+                    <div class="icon">
+                        <i class="fa-solid fa-search "></i>
+                    </div>
+                    <div class="new-search-input" style="width: 80%;">
+                        <form onkeyup="showMealList()">
+                            <input id="search-input" type="text" placeholder="Search food or receipe" />
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="cards-holder">
+
+
+                <!-- <div class="card">
+                    <div class="card-top">
+                        <div class="dish-photo">
+                            <img src="${element.strMealThumb}" alt="">
+                        </div>
+                        <div class="dish-name">
+                            ${element.strMeal}
+                        </div>
+                        <div class="dish-details">
+                            ${truncate(element.strInstructions,50)}
+                            <a href="${element.strInstructions}">
+                                <span class="button">Know More</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="like">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <div class="play">
+                            <a href="${element.strYoutube}">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div> -->
+
+
+            </div>
+
+
+        </div>
+    </main>
 
     <script src="script.js"></script>
 
