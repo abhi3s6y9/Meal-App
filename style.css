@@ -1,3 +1,7 @@
+body {
+    background-color: lightgray;
+}
+
 #navbar {
     display: flex;
     flex-direction: row;
@@ -149,4 +153,58 @@ aside #siebar hr {
     border-radius: 7px;
     color: purple;
     font-size: 18px;
+}
+
+#cards-holder {
+    width: 100%;
+    min-height: 200px;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 25vh;
+    padding: 0 10px 0 10px;
+}
+
+.card {
+    height: 350px;
+    width: 220px;
+    background-color: #cacde8;
+    border-radius: 20px;
+    border: 1px solid black;
+    margin: 20px 10px 20px 10px;
+}
+
+.card-top {
+    height: 80%;
+}
+
+.dish-photo {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.dish-photo img {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.card-top .dish-name {
+    font-weight: bold;
+    font-size: large;
+}
+
+.card-bottom {
+    height: 20%;
+    position: relative;
+}
+
+.card-bottom .fa-heart {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    color: white;
 }

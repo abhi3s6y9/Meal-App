@@ -47,7 +47,7 @@ async function showMealList() {
             <div class="card">
             <div class="card-top"  onclick="showMealDetails(${element.idMeal}, '${inputValue}')">
                 <div class="dish-photo" >
-                    <img src="${element.strMealThumb}" alt="">
+                    <img src="${element.strMealThumb}" alt="Image of the Meal">
                 </div>
                 <div class="dish-name">
                     ${element.strMeal}
@@ -60,20 +60,11 @@ async function showMealList() {
                 </div>
             </div>
             <div class="card-bottom">
-                <div class="like">
-
                 <i class="fa-solid fa-heart ${isFav(list, element.idMeal) ? 'active' : ''} " onclick="addRemoveToFavList(${element.idMeal})"></i>
-                
-                </div>
-                <div class="play">
-                    <a href="${element.strYoutube}">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                </div>
             </div>
         </div>
             `
-        }).join('');
+        }).join();
 
         document.getElementById('cards-holder').innerHTML = html;
     }
