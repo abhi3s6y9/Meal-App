@@ -1,4 +1,5 @@
 body {
+    height: 100vh;
     background-color: lightgray;
 }
 
@@ -50,11 +51,12 @@ body {
     transition: all ease-in-out 0.25s;
 }
 
-.side-drawer button {
+.side-drawer a {
     border: 1px solid rgb(17, 32, 61);
     background-color: transparent;
     border-radius: 4px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .fa-heart {
@@ -78,22 +80,7 @@ aside {
     margin-top: 47px;
 }
 
-#sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    /* flex: 0.2; */
-    background-color: lightgray;
-    opacity: 0.7;
-    height: 93vh;
-    width: 23vw;
-    display: none;
-}
 
-#sidebar.show-sidebar {
-    display: flex;
-    transition: all ease-in-out .25s;
-}
 
 .title {
     color: white;
@@ -107,6 +94,10 @@ aside #siebar hr {
     margin-top: 0;
     width: 100%;
     border: 5px dotted darkgray;
+}
+
+#flex-box {
+    min-height: 30vh;
 }
 
 .container {
@@ -158,7 +149,6 @@ aside #siebar hr {
 #cards-holder {
     width: 100%;
     min-height: 200px;
-    height: 100vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -205,6 +195,6 @@ aside #siebar hr {
 .card-bottom .fa-heart {
     position: absolute;
     bottom: 5px;
-    left: 10px;
+    left: 45%;
     color: white;
 }
