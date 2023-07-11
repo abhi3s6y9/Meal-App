@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favourite Meals</title>
-    <style>
 
+    <style>
         .title{
             letter-spacing: 5px;
             text-align: center;
@@ -28,7 +28,73 @@
             /* overflow: scroll; */
         }
 
+        #fav {
+            height: 85vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        .fav-item.nothing {
+            background-color: transparent;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .fav-item {
+            width: 50%;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: hsl(234, 39%, 85%);
+            color: hsl(235, 24%, 19%);
+            font-size: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .fav-item:hover{
+            cursor: pointer;
+        }
+
+        .fav-item-photo {
+            width: 100%;
+        }
+
+        .fav-item-photo img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10%;
+        }
+
+        .fav-item-details {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 90%;
+            height: 40px;
+            align-items: center;
+        }
+
+        #fav-like-button {
+            border: 1px solid hsl(233, 14%, 35%);
+            border-radius: 10%;
+            padding: 2px;
+            height: 30px;
+            box-shadow: 1px 1px 10px -2px rgb(146, 99, 99);
+        }
+
+        #fav-like-button:hover {
+            cursor: pointer;
+            border-color: brown;
+        }
     </style>
+
 </head>
 <body>
 

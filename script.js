@@ -11,7 +11,7 @@ function isFav(list, id) {
 
 // It returns truncated string greater than 50
 function truncate(str, n) {
-    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+    return (str.length > n) ? str.substr(0, n - 1) + "..." : str;
 }
 
 // Configure local storage for favourite items
@@ -27,44 +27,6 @@ const fetchMealsFromApi = async (url, value) => {
     return meals;
 }
 
-// Function to show Meals based on search
-async function showMealList() {
-    const list = JSON.parse(localStorage.getItem(dbObjectFavList));
-    const inputValue = document.getElementById("search-input").value;
-    const url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
-    const mealsData = await fetchMealsFromApi(url, inputValue);
-    let html = '';
-    if (mealsData.meals) {
-        html = mealsData.meals.map(element => {
-
-            return `
-
-            <div class="card">
-            <div class="card-top"  onclick="showMealDetails(${element.idMeal}, '${inputValue}')">
-                <div class="dish-photo" >
-                    <img src="${element.strMealThumb}" alt="Image of the Meal">
-                </div>
-                <div class="dish-name">
-                    ${element.strMeal}
-                </div>
-                <div class="dish-details">
-                    ${truncate(element.strInstructions, 50)}
-                    
-                    <span class="button" onclick="showMealDetails(${element.idMeal}, '${inputValue}')">Know More</span>
-
-                </div>
-            </div>
-            <div class="card-bottom">
-                <i class="fa-solid fa-heart ${isFav(list, element.idMeal) ? 'active' : ''} " onclick="addRemoveToFavList(${element.idMeal})"></i>
-            </div>
-        </div>
-            `
-        }).join('');
-
-        document.getElementById('cards-holder').innerHTML = html;
-    }
-}
-
 
 // To Show List of Favourite Meals
 async function showFavMealList() {
@@ -73,9 +35,11 @@ async function showFavMealList() {
     let html = "";
 
     if (favList.length == 0) {
-        html = `<div class="fav-item nothing"> <h1> 
-        Nothing To Show.....</h1> </div>`
-    } else {
+        html = `<div class="fav-item nothing"> 
+                <h1> Nothing To Show.....</h1> 
+                </div>`
+    } 
+    else {
         for (let i = 0; i < favList.length; i++) {
             const favMealList = await fetchMealsFromApi(url, favList[i]);
             if (favMealList.meals[0]) {
@@ -109,118 +73,43 @@ async function showFavMealList() {
 }
 
 
-
-async function showMealDetails(itemId, searchInput) {
-
+// Function to show Meals based on search
+async function showMealList() {
     const list = JSON.parse(localStorage.getItem(dbObjectFavList));
-    const url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
-    const searchUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
-    const mealList = await fetchMealsFromApi(searchUrl,searchInput);
+    const inputValue = document.getElementById("search-input").value;
+    const url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+    const mealsData = await fetchMealsFromApi(url, inputValue);
+    let html = '';
+    if (mealsData.meals) {
+        html = mealsData.meals.map(element => {
 
-    let html = ''
-    const mealDetails = await fetchMealsFromApi(url, itemId);
-    if (mealDetails.meals) {
-        html = `
-        <div class="container remove-top-margin">
+                return `
+                    <div class="card">
 
-            <div class="header hide">
-                <div class="title">
-                    Let's Eat Something New
-                </div>
-            </div>
-            <div class="fixed" id="search-bar">
-                <div class="icon">
-                    <i class="fa-solid fa-search "></i>
-                </div>
-                <div class="new-search-input">
-                    <form onkeyup="showMealList()">
-                        <input id="search-input" type="text" placeholder="Search food, receipe" />
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="item-details">
-        <div class="item-details-left">
-        <img src="  ${mealDetails.meals[0].strMealThumb}" alt="">
-    </div>
-    <div class="item-details-right">
-        <div class="item-name">
-            <strong>Name: </strong>
-            <span class="item-text">
-            ${mealDetails.meals[0].strMeal}
-            </span>
-        </div>
-        <div class="item-category">
-            <strong>Category: </strong>
-            <span class="item-text">
-            ${mealDetails.meals[0].strCategory}
-            </span>
-        </div>
-        <div class="item-ingrident">
-            <strong>Ingrident: </strong>
-            <span class="item-text">
-            ${mealDetails.meals[0].strIngredient1},${mealDetails.meals[0].strIngredient2},
-            ${mealDetails.meals[0].strIngredient3},${mealDetails.meals[0].strIngredient4}
-            </span>
-        </div>
-        <div class="item-instruction">
-            <strong>Instructions: </strong>
-            <span class="item-text">
-            ${mealDetails.meals[0].strInstructions}
-            </span>
-        </div>
-        <div class="item-video">
-            <strong>Video Link:</strong>
-            <span class="item-text">
-            <a href="${mealDetails.meals[0].strYoutube}">Watch Here</a>
-        
-            </span>
-            <div id="like-button" onclick="addRemoveToFavList(${mealDetails.meals[0].idMeal})"> 
-            ${isFav(list, mealDetails.meals[0].idMeal) ? 'Remove From Favourite' : 'Add To Favourite'} </div>
-        </div>
-    </div>
-</div> 
-        <div class="card-name">
-        Related Items
-    </div>
-    <div id="cards-holder" class=" remove-top-margin ">`
-    }
+                        <a href="mealDetail.html?itemId=${element.idMeal}" target="_blank">
+                        <div class="card-top">
+                            <div class="dish-photo" >
+                                <img src="${element.strMealThumb}" alt="Image of the Meal">
+                            </div>
+                            <div class="dish-name">
+                                ${element.strMeal}
+                            </div>
 
-    if( mealList.meals!=null){
-        html += mealList.meals.map(element => {
-            return `       
-            <div class="card">
-                <div class="card-top"  onclick="showMealDetails(${element.idMeal}, '${searchInput}')">
-                    <div class="dish-photo" >
-                        <img src="${element.strMealThumb}" alt="">
-                    </div>
-                    <div class="dish-name">
-                        ${element.strMeal}
-                    </div>
-                    <div class="dish-details">
-                        ${truncate(element.strInstructions, 50)}
-                        <span class="button" onclick="showMealDetails(${element.idMeal}, '${searchInput}')">Know More</span>
-                    </div>
-                </div>
-                <div class="card-bottom">
-                    <div class="like">
-                    
-                        <i class="fa-solid fa-heart ${isFav(list, element.idMeal) ? 'active' : ''} " 
-                        onclick="addRemoveToFavList(${element.idMeal})"></i>
-                    </div>
-                    <div class="play">
-                        <a href="${element.strYoutube}">
-                            <i class="fa-brands fa-youtube"></i>
+                            <div class="dish-details">
+                                ${truncate(element.strInstructions, 50)}
+                                <span>Know More</span>
+                            </div>
+                        </div>
                         </a>
+
+                        <div class="card-bottom">
+                            <i class="fa-solid fa-heart ${isFav(list, element.idMeal) ? 'active' : ''} " onclick="addRemoveToFavList(${element.idMeal})"></i>
+                        </div>
                     </div>
-                </div>
-            </div>
-        `
-        }).join('');
+                `
+                }).join('');
+
+        document.getElementById('cards-holder').innerHTML = html;
     }
-
-
-    html = html + '</div>';
-
-    document.getElementById('meal-detail').innerHTML = html;
 }
+

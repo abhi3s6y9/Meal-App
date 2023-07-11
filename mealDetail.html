@@ -1,13 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Detail</title>
+
+    <style>
+        .title{
+            letter-spacing: 5px;
+            text-align: center;
+        }
+
+        hr{
+            width: 80%;
+        }
+
+        #meal-detail{
+            width: 100vw;
+            margin-top: 20px;
+        }
+
+        div{
+            display: inline-block;
+        }
+
+        #image{
+            width: 20vw;
+            margin-left: 10vw;
+        }
+
+        img{
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        #details{
+            max-width: 60vw;
+            margin-left: 20px;
+            font-size: large;
+        }
+
+    </style>
+
+    
+
 </head>
 <body>
+    <h2 class="title">Meal Detail</h2>
+    <hr>
+
     <div id="meal-detail">
         
     </div>
+
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var itemId = urlParams.get('itemId');
+        console.log(itemId);
+
+        const fetchMealsFromApi = async (url, value) => {
+            const response = await fetch(`${url + value}`);
+            const meals = await response.json();
+            return meals;
+        }
+
+        async function showMealDetails(itemId) {
+
+            const url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
+
+            let html = '';
+            const meal = await fetchMealsFromApi(url, itemId);
+
+            html = `
+                <div id="image">
+                    <img src="${meal.meals[0].strMealThumb}" alt="Image of the Meal">
+                </div>
+                <div id="details">
+                    <h3> <b>Name:</b> ${meal.meals[0].strMeal}</h3>
+                    <h4> <b>Category:</b> <i>${meal.meals[0].strCategory}</i> </h4>
+                    <h4> <b>Ingredient:</b> <i>${meal.meals[0].strIngredient1}, ${meal.meals[0].strIngredient2}, ${meal.meals[0].strIngredient3}, ${meal.meals[0].strIngredient4}</i> </h4>
+                    <p><b>Instructions:</b> ${meal.meals[0].strInstructions}</p>
+                </div>
+            `
+
+            document.getElementById('meal-detail').innerHTML = html;
+
+        }
+
+        showMealDetails(itemId);
+    </script>
+
 </body>
 </html>
