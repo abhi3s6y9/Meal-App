@@ -1,5 +1,5 @@
 body {
-    height: 100vh;
+    height: 70vh;
     background-color: lightgray;
 }
 
@@ -160,7 +160,7 @@ body {
 }
 
 .card-top {
-    height: 80%;
+    height: 90%;
 }
 
 .dish-photo {
@@ -175,13 +175,22 @@ body {
     border-top-right-radius: 20px;
 }
 
-.card-top .dish-name {
-    font-weight: bold;
-    font-size: large;
+.card-top .dish-details {
+    width: 80%;
+    margin-left: 10px;
+}
+
+.dish-details h4 {
+    margin: 0;
+}
+
+.card-top span {
+    text-decoration: underline;
+    color: blue;
 }
 
 .card-bottom {
-    height: 20%;
+    height: 10%;
     position: relative;
 }
 
@@ -190,4 +199,14 @@ body {
     bottom: 10px;
     left: 45%;
     color: white;
+}
+
+.fa-heart.active {
+    color: red;
+}
+
+.card-bottom .fa-heart:hover {
+    cursor: pointer;
+    scale: 1.6;
+    transition: ease-in-out 0.25s;
 }

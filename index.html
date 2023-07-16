@@ -36,7 +36,7 @@
             <div class="container">
 
                 <div class="header">
-                    <div class="title" style="color: gray;">
+                    <div class="title" style="color: white;">
                         What would you like to Eat!
                     </div>
                 </div>
@@ -63,14 +63,11 @@
                         <div class="dish-photo">
                             <img src="${element.strMealThumb}" alt="Image of the Meal">
                         </div>
-                        <div class="dish-name">
-                            ${element.strMeal}
-                        </div>
+                        
                         <div class="dish-details">
+                            <h4>${element.strMeal}</h4>
                             ${truncate(element.strInstructions,50)}
-                            <a href="${element.strInstructions}">
-                                <span class="button">Know More</span>
-                            </a>
+                            <span class="button">Know More</span>
                         </div>
                     </div>
 

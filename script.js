@@ -1,30 +1,62 @@
+// Function to fetch data/meals from api
+const fetchMealsFromApi = async (url, value) => {
+    const response = await fetch(`${url + value}`);
+    const meals = await response.json();
+    return meals;
+}
+
+// Configure local storage for favourite items
+const dbObjectFavList = "favouriteMealList";
+if (localStorage.getItem(dbObjectFavList) == null) {
+    localStorage.setItem(dbObjectFavList, JSON.stringify([]));
+}
+
+
 // Checks if ID is in the Favourite list
 function isFav(list, id) {
     let res = false;
     for (let i = 0; i < list.length; i++) {
         if (id == list[i]) {
             res = true;
+            break;
         }
     }
     return res;
 }
 
-// It returns truncated string greater than 50
-function truncate(str, n) {
-    return (str.length > n) ? str.substr(0, n - 1) + "..." : str;
+// Function to update the counter of Favourite items when the item is added or removed from Favourite list
+function updateFavCounter(){
+    const favCounter = document.getElementById('total-counter');
+    const favItemArray = JSON.parse(localStorage.getItem(dbObjectFavList));
+    if(favCounter.innerText != null){
+        favCounter.innerText = favItemArray.length;
+    }
 }
 
-// Configure local storage for favourite items
-const dbObjectFavList = "favouritesList";
-if (localStorage.getItem(dbObjectFavList) == null) {
-    localStorage.setItem(dbObjectFavList, JSON.stringify([]));
-}
+function addRemoveToFavList(id) {
+    let db = JSON.parse(localStorage.getItem(dbObjectFavList));
+    console.log(db);
+    let ifExist = false;
+    for (let i = 0; i < db.length; i++) {
+        if (id == db[i]) {
+            ifExist = true;
+            break;
+        }
 
-// Function to fetch data/meals from api
-const fetchMealsFromApi = async (url, value) => {
-    const response = await fetch(`${url + value}`);
-    const meals = await response.json();
-    return meals;
+    } 
+    
+    if (ifExist) {
+        db.splice(db.indexOf(id), 1);
+
+    } else {
+        db.push(id);
+    }
+
+    localStorage.setItem(dbObjectFavList, JSON.stringify(db));
+
+    updateFavCounter();
+    showFavMealList();
+    showMealList();
 }
 
 
@@ -73,6 +105,21 @@ async function showFavMealList() {
 }
 
 
+// Function to show the count of Number of Favourite items on the Home page
+const favCount = function (){
+    var count = document.getElementById('total-counter');
+    var favItemArray = JSON.parse(localStorage.getItem(dbObjectFavList));
+    if(count.innerText != null){
+        count.innerText = favItemArray.length;
+    }
+}();
+
+
+// It returns truncated string greater than 50
+function truncate(str, n) {
+    return (str.length > n) ? str.substr(0, n - 1) + "..." : str;
+}
+
 // Function to show Meals based on search
 async function showMealList() {
     const list = JSON.parse(localStorage.getItem(dbObjectFavList));
@@ -87,19 +134,17 @@ async function showMealList() {
                     <div class="card">
 
                         <a href="mealDetail.html?itemId=${element.idMeal}" target="_blank">
-                        <div class="card-top">
-                            <div class="dish-photo" >
-                                <img src="${element.strMealThumb}" alt="Image of the Meal">
+                            <div class="card-top">
+                                <div class="dish-photo" >
+                                    <img src="${element.strMealThumb}" alt="Image of the Meal">
+                                </div>
+                                
+                                <div class="dish-details">
+                                    <h4>${element.strMeal}</h4>
+                                    ${truncate(element.strInstructions, 50)}
+                                    <span>Know More</span>
+                                </div>
                             </div>
-                            <div class="dish-name">
-                                ${element.strMeal}
-                            </div>
-
-                            <div class="dish-details">
-                                ${truncate(element.strInstructions, 50)}
-                                <span>Know More</span>
-                            </div>
-                        </div>
                         </a>
 
                         <div class="card-bottom">
