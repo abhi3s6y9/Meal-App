@@ -7,6 +7,7 @@
 
     <style>
         .title{
+            font-family: "Lucida Handwriting";
             letter-spacing: 5px;
             text-align: center;
         }
@@ -25,40 +26,26 @@
             opacity: 0.7;
             min-height: 88vh;
             width: 50vw;
-            /* overflow: scroll; */
+            /* overflow-y: scroll; */
         }
 
-        #fav {
-            height: 85vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-y: scroll;
-        }
-
-        .fav-item.nothing {
+        .fav-item-card.nothing {
+            margin-top: 10px;
             background-color: transparent;
             font-size: 0.8rem;
             text-decoration: none;
         }
 
-        .fav-item {
-            width: 50%;
-            min-height: 250px;
+        .fav-item-card {
+            margin-top: 30px;
+            width: 30%;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
             background-color: hsl(234, 39%, 85%);
-            color: hsl(235, 24%, 19%);
-            font-size: 1.2rem;
             border-radius: 10px;
-        }
-
-        .fav-item:hover{
-            cursor: pointer;
+            border: 1px solid black;
         }
 
         .fav-item-photo {
@@ -67,32 +54,58 @@
 
         .fav-item-photo img {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
 
         .fav-item-details {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            width: 90%;
-            height: 40px;
             align-items: center;
+            width: 90%;
+            min-height: 50px;
+            margin-bottom: 3px;
+            font-size: 1.1rem;
         }
 
-        #fav-like-button {
+        #fav-remove-button {
             border: 1px solid hsl(233, 14%, 35%);
-            border-radius: 10%;
+            border-radius: 7px;
             padding: 2px;
-            height: 30px;
+            min-height: 30px;
             box-shadow: 1px 1px 10px -2px rgb(146, 99, 99);
+            text-align: center;
         }
 
-        #fav-like-button:hover {
+        #fav-remove-button:hover {
             cursor: pointer;
-            border-color: brown;
+            border: 2px solid red;
         }
+
+        @media screen and (max-width: 900px) {
+            hr{
+                width: 80%;
+            }
+            #plate{
+                width: 60%;
+            }
+            .fav-item-card{
+                width: 50%;
+                min-height: 20vh;
+            }
+            .fav-item-details {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                width: 90%;
+                min-height: 50px;
+                margin-top: 3px;
+                margin-bottom: 3px;
+            }
+        }
+
     </style>
 
 </head>
@@ -102,16 +115,84 @@
     <hr>
 
     <div id="plate">
-        <div id="fav">
-            <!-- Favourite items -->
-                <!-- Favourite item photo -->
-                <!-- Favourite item details -->
-                    <!-- Remove from Favourite button -->
-        </div>
+        <!-- Favourite items -->
+            <!-- Favourite item photo -->
+            <!-- Favourite item details -->
+                <!-- Remove from Favourite button -->
     </div>
 
+
     <script>
-        
+
+        const dbObjectFavList = "favouriteMealList";
+
+        const fetchMealsFromApi = async (url, value) => {
+            const response = await fetch(`${url + value}`);
+            const meals = await response.json();
+            return meals;
+        }
+
+        function addRemoveToFavList(id) {
+            let db = JSON.parse(localStorage.getItem(dbObjectFavList));
+
+            let ifExist = false;
+            for (let i = 0; i < db.length; i++) {
+                if (id == db[i]) {
+                    ifExist = true;
+                    break;
+                }
+            } 
+            
+            if (ifExist) {
+                db.splice(db.indexOf(id), 1);
+            } else {
+                db.push(id);
+            }
+
+            localStorage.setItem(dbObjectFavList, JSON.stringify(db));
+
+            showFavMeals();
+        }
+
+        async function showFavMeals(){
+            const favItemArray = JSON.parse(localStorage.getItem(dbObjectFavList));
+            const url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
+
+            var html = "";
+    
+            if(favItemArray.length == 0){
+                html = `<div class="fav-item-card nothing"> <h3>No favourite item</h3> </div>`
+            }
+            else{
+                for(var i=0;i<favItemArray.length;i++){
+                    var favMeal = await fetchMealsFromApi(url, favItemArray[i]);
+                    let element = favMeal.meals[0];
+                    html += `
+                        <div class="fav-item-card">
+                            <div class="fav-item-photo">
+                                <img src="${element.strMealThumb}" alt="Image of the Meal">
+                            </div>
+    
+                            <div class="fav-item-details">
+                                <div class="fav-item-name">
+                                    <strong>Name: </strong>
+                                    <span class="fav-item-text">${element.strMeal}</span>
+                                </div>
+                                <div id="fav-remove-button" onclick="addRemoveToFavList(${element.idMeal})">
+                                    Remove from Fav
+                                </div>
+                            </div>
+
+                        </div>
+                    `
+                }
+            }
+    
+            document.getElementById('plate').innerHTML = html;
+        }
+
+        showFavMeals();
+
     </script>
 
 </body>

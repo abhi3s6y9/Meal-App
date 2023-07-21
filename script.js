@@ -35,19 +35,17 @@ function updateFavCounter(){
 
 function addRemoveToFavList(id) {
     let db = JSON.parse(localStorage.getItem(dbObjectFavList));
-    console.log(db);
+
     let ifExist = false;
     for (let i = 0; i < db.length; i++) {
         if (id == db[i]) {
             ifExist = true;
             break;
         }
-
     } 
     
     if (ifExist) {
         db.splice(db.indexOf(id), 1);
-
     } else {
         db.push(id);
     }
