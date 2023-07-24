@@ -59,7 +59,7 @@ function addRemoveFromFavList(id) {
 }
 
 
-// Function to show the count of Number of Favourite items on the Home page
+// Function to show the count of Number of Favourite items on the Home page when the page loads for the first time
 const favCount = function (){
     var count = document.getElementById('total-counter');
     var favItemArray = JSON.parse(localStorage.getItem(favMealDB));
