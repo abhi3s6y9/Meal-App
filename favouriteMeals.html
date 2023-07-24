@@ -8,6 +8,7 @@
     <style>
         .title{
             font-family: "Lucida Handwriting";
+            color: orangered;
             letter-spacing: 5px;
             text-align: center;
         }
@@ -38,6 +39,7 @@
 
         .fav-item-card {
             margin-top: 30px;
+            margin-bottom: 30px;
             width: 30%;
             min-height: 200px;
             display: flex;
@@ -124,38 +126,26 @@
 
     <script>
 
-        const dbObjectFavList = "favouriteMealList";
+        const favMealsDB = "favouriteMealList";
 
-        const fetchMealsFromApi = async (url, value) => {
+        const fetchMealsThroughApi = async (url, value) => {
             const response = await fetch(`${url + value}`);
             const meals = await response.json();
             return meals;
         }
 
-        function addRemoveToFavList(id) {
-            let db = JSON.parse(localStorage.getItem(dbObjectFavList));
-
-            let ifExist = false;
-            for (let i = 0; i < db.length; i++) {
-                if (id == db[i]) {
-                    ifExist = true;
-                    break;
-                }
-            } 
-            
-            if (ifExist) {
-                db.splice(db.indexOf(id), 1);
-            } else {
-                db.push(id);
-            }
-
-            localStorage.setItem(dbObjectFavList, JSON.stringify(db));
+        // Function to remove Favourite item from Favourite list
+        function removeFromFavList(id) {
+            let db = JSON.parse(localStorage.getItem(favMealsDB));
+            db.splice(db.indexOf(id), 1);
+            localStorage.setItem(favMealsDB, JSON.stringify(db));
 
             showFavMeals();
         }
 
+        // To Show List of Favourite Meals
         async function showFavMeals(){
-            const favItemArray = JSON.parse(localStorage.getItem(dbObjectFavList));
+            const favItemArray = JSON.parse(localStorage.getItem(favMealsDB));
             const url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
             var html = "";
@@ -165,7 +155,7 @@
             }
             else{
                 for(var i=0;i<favItemArray.length;i++){
-                    var favMeal = await fetchMealsFromApi(url, favItemArray[i]);
+                    var favMeal = await fetchMealsThroughApi(url, favItemArray[i]);
                     let element = favMeal.meals[0];
                     html += `
                         <div class="fav-item-card">
@@ -178,7 +168,7 @@
                                     <strong>Name: </strong>
                                     <span class="fav-item-text">${element.strMeal}</span>
                                 </div>
-                                <div id="fav-remove-button" onclick="addRemoveToFavList(${element.idMeal})">
+                                <div id="fav-remove-button" onclick="removeFromFavList(${element.idMeal})">
                                     Remove from Fav
                                 </div>
                             </div>

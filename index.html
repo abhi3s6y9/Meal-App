@@ -15,20 +15,18 @@
     <div class="bg-image">
     </div>
 
-    <div id="navbar">
+    <nav>
         <span id="app-logo">
-            <a href="index.html">
-                Meal App
-            </a>
+            <a href="index.html"> Meal App </a>
         </span>
         
-        <span class="side-drawer">
+        <span class="side-bar">
             <a href="favouriteMeals.html" target="_blank">
                 <i class="fa-sharp fa-solid fa-heart"></i>
                 <span id="total-counter">0</span>
             </a>
         </span>
-    </div>
+    </nav>
 
 
     <main id="flex-box">
@@ -46,7 +44,7 @@
                         <i class="fa-solid fa-search "></i>
                     </div>
                     <div class="new-search-input" style="width: 80%;">
-                        <form onkeyup="showMealList()">
+                        <form onkeyup="showAllMeals()">
                             <input id="search-input" type="text" placeholder="Search food or receipe" />
                         </form>
                     </div>

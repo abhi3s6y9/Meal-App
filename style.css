@@ -3,7 +3,25 @@ body {
     background-color: lightgray;
 }
 
-#navbar {
+
+/* ------------- Background Image -------------- */
+/* Styling top background image */
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    z-index: -1;
+    background-image: url("assets/foodBackground.jpg");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.3;
+}
+
+
+/* ------------- Navbar ------------- */
+nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -18,40 +36,27 @@ body {
     z-index: 1;
 }
 
-.bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70vh;
-    z-index: -1;
-    background-image: url("assets/foodBackground.jpg");
-    background-position: center;
-    background-size: cover;
-    opacity: 0.3;
-}
-
 #app-logo a {
     text-decoration: none;
-    font-family: "Lucida Handwriting", 'Cursive';
+    font-family: "Lucida Handwriting";
     color: ivory;
     font-size: 1.75rem;
     margin-left: 10px;
 }
 
-.side-drawer {
+.side-bar {
     height: 100%;
     display: flex;
     align-items: center;
     margin-right: 10px;
 }
 
-.side-drawer:hover {
+.side-bar:hover {
     scale: 1.2;
     transition: all ease-in-out 0.25s;
 }
 
-.side-drawer a {
+.side-bar a {
     border: 1px solid rgb(17, 32, 61);
     background-color: transparent;
     border-radius: 4px;
@@ -75,19 +80,15 @@ body {
 }
 
 
-.title {
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-    letter-spacing: 5px;
-    text-align: center;
-}
 
+/* ----------- Main ----------- */
 
+/* Flex box to contain Container (Header/Title and Search bar) and Card holder */
 #flex-box {
     min-height: 20vh;
 }
 
+/* Container contains Header/Title and Searchbar */
 .container {
     width: 100%;
     margin-top: 150px;
@@ -95,6 +96,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.title {
+    color: ivory;
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-align: center;
 }
 
 #search-bar {
@@ -134,6 +143,7 @@ body {
     font-size: 18px;
 }
 
+/* Card holder to hold resulting Dish/Food cards */
 #cards-holder {
     width: 100%;
     min-height: 200px;

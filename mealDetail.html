@@ -85,18 +85,18 @@
         var urlParams = new URLSearchParams(window.location.search);
         var itemId = urlParams.get('itemId');
 
-        const fetchMealsFromApi = async (url, value) => {
+        const fetchMealsThroughApi = async (url, value) => {
             const response = await fetch(`${url + value}`);
             const meals = await response.json();
             return meals;
         }
 
-        async function showMealDetails(itemId) {
+        async function showMealDetail(itemId) {
 
             const url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
             let html = '';
-            const meal = await fetchMealsFromApi(url, itemId);
+            const meal = await fetchMealsThroughApi(url, itemId);
 
             html = `
                 <div id="image">
@@ -114,7 +114,7 @@
 
         }
 
-        showMealDetails(itemId);
+        showMealDetail(itemId);
     </script>
 
 </body>
